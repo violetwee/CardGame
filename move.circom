@@ -16,6 +16,9 @@ include "./circomlib/bitify.circom";
     - (4): ((x2-x3)^2 + (y2-y3)^2) <= energy^2
 */
 
+/**
+  Check that an x-y coordinate is within the play circle.
+*/
 template Boundary() {
     signal input x;
     signal input y;
@@ -34,6 +37,9 @@ template Boundary() {
     out <== comp.out;
 }
 
+/** 
+  Check that player has sufficient energy to hop from A->B, where A=(x1,y1) and B=(x2,y2)
+*/
 template Hop() {
   signal input x1;
   signal input y1;
@@ -106,6 +112,8 @@ template Main() {
 
   // (4): Check that B->C distance is within the energy bounds
   // check ((x2-x3)^2 + (y2-y3)^2) <= energy^2
+  // Since we only perform a check on the distance from A->B with the energy value 
+  // and energy is not deducted for the hop, the energy reamins at initial value (ie. regenerated) 
   component hopBC = Hop();
   hopBC.x1 <== x2;
   hopBC.y1 <== y2;
