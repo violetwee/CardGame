@@ -5,13 +5,13 @@ while getopts f:j: flag
 do 
   case "${flag}" in
         f) filename=${OPTARG};; # circom filename, exclude extension. ie. merkle_circuit
-        j) json=${OPTARG};; # json input file ie. input_8.json
+        j) json=${OPTARG};; # json input file ie. input.json
     esac
 done
 
 # Compile circom circuit and generate files needed for witness generation later
 circom ${filename}.circom --r1cs --wasm --sym --c
-# Copy input_8.json to js folder to be used for witness generation
+# Copy input.json to js folder to be used for witness generation
 cp $json ${filename}_js
 cd ${filename}_js
 # Geneate witness file
@@ -23,7 +23,7 @@ cp witness.wtns ../witness.wtns
 cd ..
 # Phase 1 - Power of Tau
 # Start new "powers of tau" ceremony
-snarkjs powersoftau new bn128 12 pot12_0000.ptau -v
+snarkjs powersoftau new bn128 14 pot12_0000.ptau -v
 # Contribute to the ceremony
 snarkjs powersoftau contribute pot12_0000.ptau pot12_0001.ptau --name="First contribution" -v
 

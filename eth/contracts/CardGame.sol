@@ -36,7 +36,7 @@ contract CardGame {
         // set player as initialized
         playerInitialized[msg.sender] = true;
         // save circuit output as player's first card
-        uint256 card = _input[0]; // hash of card is at index 0
+        uint256 card = _input[2]; // hash of card is at index 2
         playerCards[msg.sender].push(card); // store card's hash on-chain
         return true;
     }
@@ -45,15 +45,16 @@ contract CardGame {
         uint256[2] memory _a,
         uint256[2][2] memory _b,
         uint256[2] memory _c,
-        uint256[5] memory _input
+        uint256[3] memory _input
     ) public initializedPlayer returns (bool) {
         // verify proof
         require(
             verifier.verifyDrawProof(_a, _b, _c, _input),
             "Failed draw proof check"
         );
-        uint256 card = _input[0];
-        // require hash2 is not equal to hash1 (duplicate)
+        uint256 card = _input[2];
+        // check if player spoofed first card as second card
+        // require hash2 is not equal to hash1
         require(
             playerCards[msg.sender][playerCards[msg.sender].length - 1] != card,
             "Duplicate of previous card"

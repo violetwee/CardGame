@@ -5,13 +5,13 @@ while getopts f:j: flag
 do 
   case "${flag}" in
         f) filename=${OPTARG};; # circom filename, exclude extension. ie. merkle_circuit
-        j) json=${OPTARG};; # json input file ie. input_8.json
+        j) json=${OPTARG};; # json input file ie. input.json
     esac
 done
 
 # Compile circom circuit and generate files needed for witness generation later
 circom ${filename}.circom --r1cs --wasm --sym --c
-# Copy input_8.json to js folder to be used for witness generation
+# Copy input.json to js folder to be used for witness generation
 cp $json ${filename}_js
 cd ${filename}_js
 # Geneate witness file
