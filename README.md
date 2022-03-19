@@ -22,19 +22,19 @@ In eth/contracts directory, Verifier.sol is a compilation of `init` and `draw` v
 
 ### Compile and test the `init` circuit.
 
-From the root directory, run:
+From the init directory, run:
 `./compile.sh -f init -j input.json`.
 Then run `snarkjs generatecall` to obtain test inputs for the verifier.
 
 ### Compile and test the `draw` circuit
 
-From the root directory, run:
+From the draw directory, run:
 `./compile.sh -f draw -j input.json`.
 Then run `snarkjs generatecall` to obtain test inputs for the verifier.
 
 To test that invalid inputs should fail the circuit, replace the input.json parameter with input_diff_suit.json, input_invalid_suit.json or input_invalid_card.json.
 
-### Compile and test the smart contracts.
+### Compile and test the smart contracts
 
 1. Copy and paste the code from Verifier.sol to Remix. Compile and deploy the Verifier.
 2. Copy and paste the code from CardGame.sol to Remix. Compile and deploy the CardGame contract using the Verifier's contract address from Step 1.
