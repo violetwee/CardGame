@@ -23,17 +23,17 @@ template Main() {
   signal output card;
 
   // verify card values are in proper range (1-13)
-  component rp1 = Range(4, 1, 13);
+  component rp1 = Range(32, 1, 13);
   rp1.in <== card_value1;
 
-  component rp2 = Range(4, 1, 13);
+  component rp2 = Range(32, 1, 13);
   rp2.in <== card_value2;
 
   // verify that card suits are in proper range (1-4)
-  component rp_suit1 = Range(4, 1, 4);
+  component rp_suit1 = Range(32, 1, 4);
   rp_suit1.in <== card_suit1;
 
-  component rp_suit2 = Range(4, 1, 4);
+  component rp_suit2 = Range(32, 1, 4);
   rp_suit2.in <== card_suit2;
 
   // hash card_value1 and card_suit1, and compare if it is 
@@ -43,7 +43,6 @@ template Main() {
   component mimc1 = MiMCSponge(2, 220, 1);
   mimc1.ins[0] <== card_value1;
   mimc1.ins[1] <== card_suit1;
-  // mimc1.ins[2] <== salt;
   mimc1.k <== salt;
   card1 <== mimc1.outs[0];
 
@@ -51,7 +50,6 @@ template Main() {
   component mimc1_2 = MiMCSponge(2, 220, 1);
   mimc1_2.ins[0] <== card_value1;
   mimc1_2.ins[1] <== card_suit2;
-  // mimc1_2.ins[2] <== salt;
   mimc1_2.k <== salt;
   card1_2 <== mimc1_2.outs[0];
 
@@ -59,13 +57,6 @@ template Main() {
 
   // card is from the same suit, 
   // we hash card2 data and use for commitment
-  // component mimc2 = MiMCSponge(2, 220, 1);
-  // mimc2.ins[0] <== card_value2;
-  // mimc2.ins[1] <== card_suit2;
-  // // mimc2.ins[2] <== salt;
-  // mimc2.k <== salt;
-  // card <== mimc2.outs[0];
-
   component mimc_value = MiMCSponge(2, 220, 1);
   mimc_value.ins[0] <== card_value2;
   mimc_value.ins[1] <== salt;
